@@ -40,7 +40,6 @@ const ProfileSchema = new mongoose.Schema({
       },
       location: {
         type: String,
-        required: true,
       },
       from: {
         type: Date,
@@ -51,14 +50,13 @@ const ProfileSchema = new mongoose.Schema({
       },
       current: {
         type: Boolean,
-        required: true,
       },
       description: {
         type: String,
       },
     },
   ],
-  eduation: [
+  education: [
     {
       school: {
         type: String,
