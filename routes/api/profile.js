@@ -7,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 // @route   GET api/profile/me
 // @desc    Get current users profile
@@ -144,7 +145,9 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
-    // @todo - remove users posts
+    // Remove users posts
+    await Post.deleteMany({ user: req.user.id });
+
     // Remove Profile
     await Profile.findOneAndRemove({ user: req.user.id });
 
@@ -285,7 +288,7 @@ router.put(
     [
       check('school', 'school is required.').not().isEmpty(),
       check('degree', 'degree is required.').not().isEmpty(),
-      check('fieldofstudy', 'fieldofstudy is required.').not().isEmpty(),
+      check('fieldOfStudy', 'fieldOfStudy is required.').not().isEmpty(),
       check('from', 'from is required.').not().isEmpty(),
       check('current', 'current is required.').not().isEmpty(),
     ],
@@ -299,7 +302,7 @@ router.put(
     const {
       school,
       degree,
-      fieldofstudy,
+      fieldOfStudy,
       from,
       to,
       current,
@@ -309,7 +312,7 @@ router.put(
     const newExp = {
       school,
       degree,
-      fieldofstudy,
+      fieldOfStudy,
       from,
       to,
       current,
